@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     Transform playerTransform;//플레이어 시작위치 저장
     public int howJump;
     public int jumpCnt;
+    public int Health;
     public float speed;
     public float jumpPower;
     void Awake()
@@ -16,7 +17,7 @@ public class Player : MonoBehaviour
         rigid = GetComponent<Rigidbody>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;//Player 위치 찾기
         jumpCnt = howJump;
-
+        Health = 1;
     }
 
     // Update is called once per frame
@@ -38,7 +39,14 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "Obstacle")
         {
-            SceneManager.LoadScene("Example1");
+            if (Health > 1)//목숨이 1개보다 많으면 목숨 개수 줄이기
+            {
+                Health--;
+            }
+            else//목숨이 1개라면 다시 하기
+            {
+                SceneManager.LoadScene("Example1");
+            }
         }
 
     }
