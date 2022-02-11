@@ -16,7 +16,8 @@ public class CameraMove : MonoBehaviour
     {
         float x = playerTransform.position.x;
         float z = playerTransform.position.z;
-        transform.position = new Vector3(x, y - 1, z);
+        y = playerTransform.position.y;
+        transform.position = new Vector3(x, y + 1, z);
         //카메라는 점프 안함
         /*transform.position = playerTransform.position;//카메라도 같이 점프*/
     }
