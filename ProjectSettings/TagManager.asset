@@ -11,6 +11,7 @@ TagManager:
   - Health
   - SpeedUp
   - Table
+  - DeadLine
   layers:
   - Default
   - TransparentFX

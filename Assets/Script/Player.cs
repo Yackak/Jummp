@@ -37,7 +37,7 @@ public class Player : MonoBehaviour
         {
             jumpCnt = 0;
         }
-        if (other.gameObject.tag == "Obstacle")
+        if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "DeadLine")
         {
             if (Health > 1)//목숨이 1개보다 많으면 목숨 개수 줄이기
             {
@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
             }
             else//목숨이 1개라면 다시 하기
             {
-                SceneManager.LoadScene("Example1");
+                SceneManager.LoadScene("1_Cafe");
             }
         }
 
