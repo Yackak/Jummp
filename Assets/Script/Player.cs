@@ -6,44 +6,106 @@ using UnityEngine.SceneManagement;
 public class Player : MonoBehaviour
 {
     Rigidbody rigid;
-    Transform playerTransform;//ÇÃ·¹ÀÌ¾î ½ÃÀÛÀ§Ä¡ ÀúÀå
+    StageManager stagemanagement;
+    Transform playerTransform;//í”Œë ˆì´ì–´ ìœ„ì¹˜ ì €ì¥
+    public char Mypos;
     public int howJump;
     public int jumpCnt;
     public int Health;
+    public int coin;
     public float speed;
+    public float jumpspeed;
     public float jumpPower;
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
-        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;//Player À§Ä¡ Ã£±â
-        jumpCnt = howJump;
+        playerTransform = GameObject.FindGameObjectWithTag("Player").transform;//Player ìœ„ì¹˜ ì°¾ê¸°
+        jumpCnt = howJump; 
         Health = 1;
+        Mypos = 'R';
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//Á¡ÇÁÅ°¸¦ ´­·¶À» ¶§ Á¡ÇÁ(Á¡ÇÁ´Â fixedupdate¿¡¼­ Ã³¸®ÇÏ¸é ¾ÈµÊ)
+            /*if ((stagemanagement.CurrentStage > 0) && (stagemanagement.CurrentStage < 11)) {// cafe ë§µì¼ë•Œ
+                if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fixedupdateï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Èµï¿½)
+                {
+                    rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+                    jumpCnt++;
+                } 
+           }*/
+            /*else if ((stagemanagement.CurrentStage > 10) && (stagemanagement.CurrentStage < 21)//Load ë§µì¼ ë•Œ
+            {
+                if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fixedupdateï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Èµï¿½)
+                {
+                    rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+                    jumpCnt++;
+                }
+            }*/
+            //else if ((stagemanagement.CurrentStage > 20) && (stagemanagement.CurrentStage < 31){//Neon_city ë§µì¼ ë•Œ
+            if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//ï¿½ï¿½ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fixedupdateï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Èµï¿½)
         {
             rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
             jumpCnt++;
+            if (Mypos == 'R')//ì˜¤ë¥¸ìª½ì—ì„œ ì í”„í•  ë•Œ
+            {
+                rigid.AddForce(new Vector3(jumpspeed, 0, 0), ForceMode.Impulse);
+                Mypos = 'L';
+            }
+            else//ì™¼ìª½ì—ì„œ ì í”„í•  ë•Œ
+            {
+                rigid.AddForce(new Vector3(-jumpspeed, 0, 0), ForceMode.Impulse);
+                Mypos = 'R';
+            }
         }
-        Vector3 moveVec = new Vector3(1, 0, 0).normalized;
+        Vector3 moveVec = new Vector3(0, 0, -1).normalized;
         transform.position += moveVec * speed * Time.deltaTime;
+        if (playerTransform.position.x > 241)//ìœ„ì¹˜ ê³ ì • í•¨ìˆ˜
+        {
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
+            transform.position += new Vector3(-1, 0, 0);
+        }
+        else if (playerTransform.position.x > 156 && playerTransform.position.x < 160)
+        {
+            if (jumpCnt == 0)
+            {
+                rigid.velocity = Vector3.zero;
+                rigid.angularVelocity = Vector3.zero;
+                transform.position += new Vector3(-1, 0, 0);
+            }
+        }
+        else if (playerTransform.position.x < 155)
+        {
+            rigid.velocity = Vector3.zero;
+            rigid.angularVelocity = Vector3.zero;
+            transform.position += new Vector3(1, 0, 0);
+        }
+        else if (playerTransform.position.x > 230 && playerTransform.position.x < 239)
+        {
+            if (jumpCnt == 0)
+            {
+                rigid.velocity = Vector3.zero;
+                rigid.angularVelocity = Vector3.zero;
+                transform.position += new Vector3(1, 0, 0);
+            }
+        }
     }
-    void OnCollisionEnter(Collision other)// °Ñ¿¡ ´ê¾ÒÀ»¶§ 
+    void OnCollisionEnter(Collision other)//ë‹¿ì•˜ì„ ë•Œ í˜¸ì¶œ í•¨ìˆ˜
     {
-        if (other.gameObject.tag == "Floor")//¹Ù´Ú¿¡ ´ê¾ÒÀ¸¸é Á¡ÇÁ È½¼ö ÃÊ±âÈ­
+        if (other.gameObject.tag == "Floor")//ë°”ë‹¥ì— ë‹¿ìœ¼ë©´ ì í”„ ì´ˆê¸°í™”
         {
             jumpCnt = 0;
         }
         if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "DeadLine")
         {
-            if (Health > 1)//¸ñ¼ûÀÌ 1°³º¸´Ù ¸¹À¸¸é ¸ñ¼û °³¼ö ÁÙÀÌ±â
+            if (Health > 1)//ëª©ìˆ¨ì´ ë” ìˆìœ¼ë©´ ëª©ìˆ¨ ê¹ì„
             {
                 Health--;
             }
-            else//¸ñ¼ûÀÌ 1°³¶ó¸é ´Ù½Ã ÇÏ±â
+            else//ëª©ìˆ¨ì´ ì—†ë‹¤ë©´ ì£½ìŒ
             {
                 SceneManager.LoadScene("1_Cafe");
             }

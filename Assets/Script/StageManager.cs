@@ -7,6 +7,7 @@ public class StageManager : MonoBehaviour
     public int isFirst;//처음 시작했는가? 1 == (처음 시작함), 0 == (해본적 있음)
     public int ClearStage;//깬 스테이지
     public int CurrentStage;//현재 내가 있는 스테이지
+    Player player;
 
 
     void Awake()
@@ -28,6 +29,7 @@ public class StageManager : MonoBehaviour
         else//처음 시작하지 않았거나 어떤 스테이지를 들어갔다면
         {
             PlayerPrefs.SetInt("ClearStage", ClearStage);//클리어 스테이지를 저장
+            PlayerPrefs.SetInt("Coin", player.coin);//클리어 스테이지를 저장
         }
         PlayerPrefs.SetInt("isFirst", 0);//게임을 했다는 것을 저장
     }

@@ -12,6 +12,7 @@ TagManager:
   - SpeedUp
   - Table
   - DeadLine
+  - Coin
   layers:
   - Default
   - TransparentFX
