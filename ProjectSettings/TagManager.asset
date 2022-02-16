@@ -13,6 +13,8 @@ TagManager:
   - Table
   - DeadLine
   - Coin
+  - Target
+  - TargetFail
   layers:
   - Default
   - TransparentFX

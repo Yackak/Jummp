@@ -17,7 +17,7 @@ public class Obstacle : MonoBehaviour
     {
         if (other.tag == "Player")//플레이어에 닿았다면
         {
-            target = transform.position + new Vector3(500, 0, 0);
+            target = transform.position + new Vector3(500, 0, 0); 
             isMove = true;
         }
     }
@@ -25,7 +25,7 @@ public class Obstacle : MonoBehaviour
     {
         if (isMove == true) 
         {
-            transform.position = Vector3.MoveTowards(transform.position, target, obstacleSpeed);//출발하기
+            transform.position = Vector3.MoveTowards(transform.position, target, obstacleSpeed * Time.deltaTime);//출발하기
         } 
     }
 

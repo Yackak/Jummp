@@ -45,7 +45,7 @@ public class Player : MonoBehaviour
                 }
             }*/
             //else if ((stagemanagement.CurrentStage > 20) && (stagemanagement.CurrentStage < 31){//Neon_city 맵일 때
-            if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
+        if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
         {
             rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
             jumpCnt++;
