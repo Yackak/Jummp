@@ -15,6 +15,7 @@ TagManager:
   - Coin
   - Target
   - TargetFail
+  - TargetAgain
   layers:
   - Default
   - TransparentFX

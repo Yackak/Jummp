@@ -107,7 +107,7 @@ public class Player : MonoBehaviour
             }
             else//목숨이 없다면 죽음
             {
-                SceneManager.LoadScene("1_Cafe");
+                SceneManager.LoadScene("3_NeonCity");
             }
         }
 
