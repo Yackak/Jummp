@@ -34,7 +34,7 @@ public class NeonBoss : MonoBehaviour
         {
             timer += Time.deltaTime;
             Right.eulerAngles = new Vector3(0, 270, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Right, Time.deltaTime * 200.0f);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Right, Time.deltaTime * 200.0f);//회전
             if (timer > Waitingtime)// 설정시간만큼 대기
             {
                 animator.speed = 1.0f;
@@ -43,7 +43,10 @@ public class NeonBoss : MonoBehaviour
         }
         else if(isit == 2)
         {
-            transform.position = Vector3.MoveTowards(transform.position, target3.position, 2 * combackSpeed * Time.deltaTime);//정비 위치로 이동
+            Right.eulerAngles = new Vector3(0, 180, 0);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, Right, Time.deltaTime * 200.0f);//180도 회전
+            transform.position = Vector3.MoveTowards(transform.position, target3.position, 5 * combackSpeed * Time.deltaTime);//정비 위치로 이동
+
         }
     }
     void OnTriggerEnter(Collider other) //닿았을 때 호출 함수

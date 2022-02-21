@@ -8,7 +8,6 @@ TagManager:
   - Obstacle
   - Clear
   - DoubleJump
-  - Health
   - SpeedUp
   - Table
   - DeadLine
@@ -16,6 +15,10 @@ TagManager:
   - Target
   - TargetFail
   - TargetAgain
+  - CoinX2
+  - ShieldObject
+  - Shield
+  - Boss
   layers:
   - Default
   - TransparentFX

@@ -8,20 +8,28 @@ public class Player : MonoBehaviour
     Rigidbody rigid;
     StageManager stagemanagement;
     Transform playerTransform;//플레이어 위치 저장
+    public GameObject ShieldObject;
     public char Mypos;
     public int howJump;
     public int jumpCnt;
-    public int Health;
     public int coin;
     public float speed;
+    public float basicSpeed;
     public float jumpspeed;
     public float jumpPower;
+    public bool isX2;
+    public bool isShield = false;
+    public bool isItem = false;
+    float timer;
+    float WaitingTime = 5;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;//Player 위치 찾기
         jumpCnt = howJump; 
-        Health = 1;
+        isShield = false;
+        basicSpeed = speed;
         Mypos = 'R';
 
     }
@@ -29,22 +37,30 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-            /*if ((stagemanagement.CurrentStage > 0) && (stagemanagement.CurrentStage < 11)) {// cafe 맵일때
-                if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
-                {
-                    rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
-                    jumpCnt++;
-                } 
-           }*/
-            /*else if ((stagemanagement.CurrentStage > 10) && (stagemanagement.CurrentStage < 21)//Load 맵일 때
+        if(isShield == false)
+        {
+            ShieldObject.SetActive(false);
+        }
+        else
+        {
+            ShieldObject.SetActive(true);
+        }
+        /*if ((stagemanagement.CurrentStage > 0) && (stagemanagement.CurrentStage < 11)) {// cafe 맵일때
+            if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
             {
-                if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
-                {
-                    rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
-                    jumpCnt++;
-                }
-            }*/
-            //else if ((stagemanagement.CurrentStage > 20) && (stagemanagement.CurrentStage < 31){//Neon_city 맵일 때
+                rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+                jumpCnt++;
+            } 
+       }*/
+        /*else if ((stagemanagement.CurrentStage > 10) && (stagemanagement.CurrentStage < 21)//Load 맵일 때
+        {
+            if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
+            {
+                rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+                jumpCnt++;
+            }
+        }*/
+        //else if ((stagemanagement.CurrentStage > 20) && (stagemanagement.CurrentStage < 31){//Neon_city 맵일 때
         if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
         {
             rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
@@ -92,6 +108,14 @@ public class Player : MonoBehaviour
                 transform.position += new Vector3(1, 0, 0);
             }
         }
+        if (isItem == true)
+        {
+            timer += Time.deltaTime;
+            if (timer > WaitingTime)
+            {
+                ItemReset();
+            }
+        }
     }
     void OnCollisionEnter(Collision other)//닿았을 때 호출 함수
     {
@@ -101,16 +125,29 @@ public class Player : MonoBehaviour
         }
         if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "DeadLine")
         {
-            if (Health > 1)//목숨이 더 있으면 목숨 깍임
-            {
-                Health--;
-            }
-            else//목숨이 없다면 죽음
+            if (isShield == false)//쉴드가 없으면 죽음
             {
                 SceneManager.LoadScene("3_NeonCity");
             }
+            else//쉴드가 없으면 잠시 무적
+            {
+                WaitingTime = 3;
+            }
         }
-
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Boss")//바닥에 닿으면 점프 초기화
+        {
+            SceneManager.LoadScene("3_NeonCity");
+        }
+    }
+    public void ItemReset()//아이템 초기화 함수
+    {
+        isX2 = false;//코인 아이템 초기화
+        howJump = 1;//더블 점프 아이템 초기화
+        speed = basicSpeed;//속도 초기화
+        isShield = false;
+        WaitingTime = 5;
+    }
 }
