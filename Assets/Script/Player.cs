@@ -20,8 +20,8 @@ public class Player : MonoBehaviour
     public bool isX2;
     public bool isShield = false;
     public bool isItem = false;
-    float timer;
-    float WaitingTime = 5;
+    public  float timer;
+    public float WaitingTime = 5;
 
     void Awake()
     {
@@ -123,23 +123,24 @@ public class Player : MonoBehaviour
         {
             jumpCnt = 0;
         }
-        if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "DeadLine")
-        {
-            if (isShield == false)//쉴드가 없으면 죽음
-            {
-                SceneManager.LoadScene("3_NeonCity");
-            }
-            else//쉴드가 없으면 잠시 무적
-            {
-                WaitingTime = 3;
-            }
-        }
     }
     void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Boss")//바닥에 닿으면 점프 초기화
         {
             SceneManager.LoadScene("3_NeonCity");
+        }
+        else if (other.gameObject.tag == "Obstacle" || other.gameObject.tag == "DeadLine")
+        {
+            if (isShield == false)//쉴드가 없으면 죽음
+            {
+                SceneManager.LoadScene("3_NeonCity");
+            }
+            else//쉴드가 있으면 3초 무적
+            {
+                timer = 0;
+                WaitingTime = 3;
+            }
         }
     }
     public void ItemReset()//아이템 초기화 함수
@@ -149,5 +150,7 @@ public class Player : MonoBehaviour
         speed = basicSpeed;//속도 초기화
         isShield = false;
         WaitingTime = 5;
+        timer = 0;
+        isItem = false;
     }
 }
