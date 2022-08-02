@@ -19,6 +19,8 @@ TagManager:
   - ShieldObject
   - Shield
   - Boss
+  - Magnet
+  - MagnetRadius
   layers:
   - Default
   - TransparentFX

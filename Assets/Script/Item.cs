@@ -54,6 +54,14 @@ public class Item : MonoBehaviour
                 player.WaitingTime = 10;
                 player.isItem = true;
             }
+            else if (this.tag == "Magnet")//아이템이 속도증가 태그라면
+            {
+                //player.ItemReset();
+                player.isMag = true;
+                gameObject.SetActive(false);//아이템 없애기
+                player.WaitingTime = 10;
+                player.isItem = true;
+            }
             else if (this.tag == "Coin")
             {
                 if (player.isX2 == false)

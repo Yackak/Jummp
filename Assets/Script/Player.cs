@@ -9,6 +9,7 @@ public class Player : MonoBehaviour
     StageManager stagemanagement;
     Transform playerTransform;//플레이어 위치 저장
     public GameObject ShieldObject;
+    public GameObject MagnetRadius;
     public char Mypos;
     public int howJump;
     public int jumpCnt;
@@ -17,6 +18,7 @@ public class Player : MonoBehaviour
     public float basicSpeed;
     public float jumpspeed;
     public float jumpPower;
+    public bool isMag;
     public bool isX2;
     public bool isShield = false;
     public bool isItem = false;
@@ -37,14 +39,9 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(isShield == false)
-        {
-            ShieldObject.SetActive(false);
-        }
-        else
-        {
-            ShieldObject.SetActive(true);
-        }
+        ShieldObject.SetActive(isShield);
+        MagnetRadius.SetActive(isMag);
+
         /*if ((stagemanagement.CurrentStage > 0) && (stagemanagement.CurrentStage < 11)) {// cafe 맵일때
             if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
             {
@@ -148,7 +145,8 @@ public class Player : MonoBehaviour
         isX2 = false;//코인 아이템 초기화
         howJump = 1;//더블 점프 아이템 초기화
         speed = basicSpeed;//속도 초기화
-        isShield = false;
+        isShield = false;//쉴드 삭제
+        isMag = false;//자석 효과 삭제
         WaitingTime = 5;
         timer = 0;
         isItem = false;
