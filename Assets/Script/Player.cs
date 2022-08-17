@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     Transform playerTransform;//플레이어 위치 저장
     public GameObject ShieldObject;
     public GameObject MagnetRadius;
+    public GameObject Bullet;
+    public Transform FirePos;
     public char Mypos;
     public int howJump;
     public int jumpCnt;
@@ -22,14 +24,17 @@ public class Player : MonoBehaviour
     public bool isX2;
     public bool isShield = false;
     public bool isItem = false;
-    public  float timer;
+    public float timer;
     public float WaitingTime = 5;
+    private const float DOUBLE_CLICK_TIME = 0.2f;
+    private float lastClickTime;
+
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;//Player 위치 찾기
-        jumpCnt = howJump; 
+        jumpCnt = howJump;
         isShield = false;
         basicSpeed = speed;
         Mypos = 'R';
@@ -41,7 +46,8 @@ public class Player : MonoBehaviour
     {
         ShieldObject.SetActive(isShield);
         MagnetRadius.SetActive(isMag);
-
+        Vector3 moveVec = new Vector3(0, 0, -1).normalized;
+        transform.position += moveVec * speed * Time.deltaTime;
         /*if ((stagemanagement.CurrentStage > 0) && (stagemanagement.CurrentStage < 11)) {// cafe 맵일때
             if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
             {
@@ -58,7 +64,7 @@ public class Player : MonoBehaviour
             }
         }*/
         //else if ((stagemanagement.CurrentStage > 20) && (stagemanagement.CurrentStage < 31){//Neon_city 맵일 때
-        if (jumpCnt < howJump && Input.GetButtonDown("Jump"))//����Ű�� ������ �� ����(������ fixedupdate���� ó���ϸ� �ȵ�)
+        if (jumpCnt < howJump && Input.GetButtonDown("Jump"))
         {
             rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
             jumpCnt++;
@@ -73,8 +79,6 @@ public class Player : MonoBehaviour
                 Mypos = 'R';
             }
         }
-        Vector3 moveVec = new Vector3(0, 0, -1).normalized;
-        transform.position += moveVec * speed * Time.deltaTime;
         if (playerTransform.position.x > 241)//위치 고정 함수
         {
             rigid.velocity = Vector3.zero;
@@ -111,6 +115,24 @@ public class Player : MonoBehaviour
             if (timer > WaitingTime)
             {
                 ItemReset();
+            }
+        }
+        if (Input.GetMouseButtonDown(0))
+        {
+            float timeSinceLastClick = Time.time - lastClickTime;
+            if(timeSinceLastClick <= DOUBLE_CLICK_TIME)//더블 클릭
+            {
+                Instantiate(Bullet, FirePos.transform.position, FirePos.transform.rotation);
+                lastClickTime = 0;
+            }
+            else//기본 클릭
+            {
+                if (jumpCnt < howJump)
+                {
+                    rigid.AddForce(new Vector3(0, jumpPower, 0), ForceMode.Impulse);
+                    jumpCnt++;
+                }
+                lastClickTime = Time.time;
             }
         }
     }
