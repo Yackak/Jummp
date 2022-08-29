@@ -21,6 +21,7 @@ TagManager:
   - Boss
   - Magnet
   - MagnetRadius
+  - TargetJump
   layers:
   - Default
   - TransparentFX
