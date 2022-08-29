@@ -12,10 +12,7 @@ public class PlayerTransform : MonoBehaviour
     }
     void LateUpdate()//카메라 위치 == 플레이어의 위치
     {
-        float x = playerTransform.position.x;
-        float z = playerTransform.position.z;
-        float y = playerTransform.position.y;
-        transform.position = new Vector3(x, y, z);
+        transform.position = playerTransform.position;
         //카메라는 점프 안함
         /*transform.position = playerTransform.position;//카메라도 같이 점프*/
     }
