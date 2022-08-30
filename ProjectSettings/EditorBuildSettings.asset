@@ -8,4 +8,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/1_Cafe.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
+  - enabled: 1
+    path: Assets/Scenes/UI.unity
+    guid: 0585fa93deb0e8444a882c0dadda30e0
+  - enabled: 1
+    path: Assets/Scenes/3_NeonCity.unity
+    guid: 74890a8f33d5f4141a702f4f392651ce
   m_configObjects: {}
